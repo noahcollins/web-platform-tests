@@ -119,14 +119,10 @@ def check_subdomains(config, subdomains):
     return rv
 
 def get_subdomains(config):
-    rv = {}
     #This assumes that the tld is ascii-only or already in punycode
     host = config["host"]
-
-    for subdomain in subdomains:
-        punycode = subdomain.encode("idna")
-        rv[subdomain] = (punycode, host)
-    return rv
+    return {subdomain: (subdomain.encode("idna"), host)
+            for subdomain in subdomains}
 
 def start_servers(config, ports):
     servers = defaultdict(list)
